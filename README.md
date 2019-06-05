@@ -1,5 +1,5 @@
 # minter-store
-MNTSHOP  crypto that uses plugin Minter-Store for Wordpress
+MNTSHOP  crypto that uses plugin Minter-Store for Wordpress example can be found here https://mntshop.ru
 ## Plugin minter-store
 Hello! It's readme about structure, features and how to support this plugin 
 
