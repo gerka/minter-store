@@ -1,0 +1,5 @@
+{
+    "require": {
+        "minter/minter-php-sdk": "^1.1"
+    }
+}
