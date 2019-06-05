@@ -13,17 +13,3 @@ includes/Pages (Store logic for sections like admin page section)
 
 And Please call self methods from BaseController to include constants to your code
 To debug and logs please use this method self::Log(' minter-plugin  '); to view logs please turn it on in BaseController::$debug
-
-
-trg-make-offer-addoption - replace to name of your plugin example: trg_coupon_addition 
-MinterStore - replace to your composer declared label in composer json ex CouponAddition
-Example for upper 👆🏾 add to composer json:
-```
-"autoload":{
-      "psr-4":{
-        "MinterStore\\":"wp-content/plugins/minter-store/includes",
-      }
-  }
-
-  ```
-  
