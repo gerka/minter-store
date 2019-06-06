@@ -13,7 +13,7 @@ License: GPL2
 use MinterStore\Base\Activate;
 use MinterStore\Base\Deactivate;
 use MinterStore\Exceptions\MinterStoreExceptions;
-
+require __DIR__ . '/vendor/autoload.php';
 defined('ABSPATH') or die('HEY, what are you doing here!?');
 try{
     require_once( ABSPATH . 'wp-admin/includes/plugin.php' );

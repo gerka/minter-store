@@ -1,5 +1,8 @@
 {
     "require": {
         "minter/minter-php-sdk": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {"MinterStore\\": "includes/"}
     }
 }
