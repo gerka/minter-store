@@ -36,6 +36,6 @@ try{
     }else {
         throw new MinterStoreExceptions('class Includes\Init is not exist');
     }
-}catch (\MinterStore\Exceptions\MinterStoreExceptions $e){
-    Logger()->error( $e->getMessage() );
+}catch (MinterStore\Exceptions\MinterStoreExceptions $e){
+    $e::Log();
 }
