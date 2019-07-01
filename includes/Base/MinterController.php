@@ -7,6 +7,7 @@
  */
 
 namespace MinterStore\Base;
+
 use Minter\SDK\MinterPrefix;
 use Minter\SDK\MinterConverter;
 use Minter\MinterAPI;
@@ -241,7 +242,6 @@ class MinterController extends BaseController
         MinterStoreExceptions::Log( (array)$EstimateTrans->result->will_get);
         $BarterPrice =  MinterConverter::convertValue($EstimateTrans->result->will_get,'bip');
         return round($BarterPrice, 2);
-
-    }
+	}
 
 }
