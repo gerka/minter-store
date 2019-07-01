@@ -15,6 +15,7 @@ use \MinterStore\Base\BaseController;
 use \MinterStore\API\SettingsApi;
 use \MinterStore\API\Callbacks\AdminCallbacks;
 use \MinterStore\API\Callbacks\ManagerCallbacks;
+use MinterStore\Exceptions\MinterStoreExceptions;
 
 class Dashboard extends BaseController
 {
@@ -49,7 +50,7 @@ class Dashboard extends BaseController
         $this->tools = [[
             'page_title'=>  $this->nameMenuDashboard,
             'menu_title'=> $this->nameMenuDashboard,
-            'capability'=>'manage_options',
+            'capability'=>'activate_plugins',
             'menu_slug' => self::getPluginName(),
             'callback'=> array($this->callbacks,'adminDashboard'),
         ]];
@@ -62,7 +63,7 @@ class Dashboard extends BaseController
                                 'parent_slug'=> $this->nameParentMenu,
                                 'page_title'=>  $this->nameMenuDashboard,
                                 'menu_title'=> $this->nameMenuDashboard,
-                                'capability'=> 'manage_options',
+                                'capability'=> 'activate_plugins',
                                 'menu_slug' => self::getPluginName(),
                                 'callback' => array( $this->callbacks, 'adminDashboard' )
                             ));
@@ -75,7 +76,7 @@ class Dashboard extends BaseController
             array(
                 'page_title' => $this->nameMenuDashboard,
                 'menu_title' => $this->nameMenuDashboard,
-                'capability' => 'manage_options',
+                'capability' => 'activate_plugins',
                 'menu_slug' => self::getPluginName(),
                 'callback' => array( $this->callbacks, 'adminDashboard' ),
                 'icon_url' => 'dashicons-clipboard',
@@ -94,6 +95,30 @@ class Dashboard extends BaseController
             )
         );
         $settings->setSettings( $args );
+
+        foreach ($this->managerTicket as $key => $value) {
+            # code...
+             $args = array(
+            array(
+                'option_group' => self::getPluginName().'_settings',
+                'option_name' => self::getPluginName().'_ticket',
+                'callback' => array( $this->callbacks_mngr, 'textTicketSanitize' )
+            )
+        );
+            $settings->setSettings( $args );
+        }
+        foreach ($this->managerText as $key => $value) {
+            # code...
+             $args = array(
+            array(
+                'option_group' => self::getPluginName().'_settings',
+                'option_name' => self::getPluginName().'_text',
+                'callback' => array( $this->callbacks_mngr, 'textSanitize' )
+            )
+        );
+            $settings->setSettings( $args );
+        }
+        
     }
     public function setSections(SettingsApi $settings)
     {
@@ -125,6 +150,43 @@ class Dashboard extends BaseController
                     'option_name' => self::getPluginName(),
                     'label_for' => $key,
                     'class' => 'ui-toggle'.$hidden
+                )
+            );
+        }
+        $settings->setFields( $args );
+         // MinterStoreExceptions::Log($this->managerTicket);
+        foreach ( $this->managerTicket as $key => $value ) {
+
+            if(strstr($key,"hidden"))
+            {$hidden = " hidden";}
+            $args[] = array(
+                'id' => $key,
+                'title' => $value,
+                'callback' => array( $this->callbacks_mngr, 'textTicketField' ),
+                'page' => self::getPluginName(),
+                'section' => self::getPluginName().'_admin_index',
+                'args' => array(
+                    'option_name' => self::getPluginName().'_ticket',
+                    'label_for' => $key,
+                    'class' => ''.$hidden
+                )
+            );
+        }
+        $settings->setFields( $args );
+        foreach ( $this->managerText as $key => $value ) {
+
+            if(strstr($key,"hidden"))
+            {$hidden = " hidden";}
+            $args[] = array(
+                'id' => $key,
+                'title' => $value,
+                'callback' => array( $this->callbacks_mngr, 'textField' ),
+                'page' => self::getPluginName(),
+                'section' => self::getPluginName().'_admin_index',
+                'args' => array(
+                    'option_name' => self::getPluginName().'_text',
+                    'label_for' => $key,
+                    'class' => ''.$hidden
                 )
             );
         }

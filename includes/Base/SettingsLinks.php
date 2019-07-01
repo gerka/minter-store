@@ -24,7 +24,6 @@ class SettingsLinks extends BaseController
     public function settings_link($links){
         $settings_link = '<a href="admin.php?page='.self::getPluginName().'">Open plugin</a>';
         array_push($links,$settings_link);
-        self::Log($links);
         return $links;
     }
 }

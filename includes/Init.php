@@ -17,10 +17,12 @@ final class Init
      */
     public static function get_services(){
         return [
-           // Base\RoleControl::class,
             Pages\Dashboard::class,
             Base\Enqueue::class,
-            Base\SettingsLinks::class
+            Base\SettingsLinks::class,
+            Base\UserControl::class,
+            Base\MinterController::class,
+            Base\CronController::class
         ];
     }
 

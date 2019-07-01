@@ -19,6 +19,8 @@ class BaseController
 
     protected $db;
     protected $managers;
+    protected $managerTicket;
+    protected $managerText;
     protected $settings_plugin ;
 
     public function __construct()
@@ -36,6 +38,35 @@ class BaseController
              'debug' => 'Turn on debug to php console'
             //'hidden_already_started' => 'Hidden var that check starting script',
         ]);//if specify hidden in $key inside array of $this->>manager it was hidennig out from user
+        $this->setManagerTicket([
+             'barter_ticket' => 'Ticket which you use for barter',
+             'utility_ticket' => 'Ticket which you use for utilities'
+            //'hidden_already_started' => 'Hidden var that check starting script',
+        ]);//if specify hidden in $key inside array of $this->>manager it was hidennig out from user
+        $this->setManagerText([
+            'node_url'=>'Node API URL',
+            'public_address'=>'Your public Minter address which woocomerce use to get pay',
+            'bip_price'=>'Price for 1 BIP in LOCAL currency',
+            'unpaid_status'=> 'Status for woocomerce for unpaid orders',
+            'paid_status'=> 'Status for woocomerce for paid orders',
+
+        ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getManagerText()
+    {
+        return $this->managerText;
+    }
+
+    /**
+     * @param mixed $managerText
+     */
+    public function setManagerText($managerText)
+    {
+        $this->managerText = $managerText;
     }
 
     /**
@@ -105,12 +136,29 @@ class BaseController
         return $this->managers;
     }
 
+
+    /**
+     * @return array
+     */
+    public function getManagerTicket(): array
+    {
+        return $this->managerTicket;
+    }
+
     /**
      * @param array $managers
      */
     public function setManagers(array $managers)
     {
         $this->managers = $managers;
+    }
+
+    /**
+     * @param array managerText
+     */
+    public function setManagerTicket(array $managerTicket)
+    {
+        $this->managerTicket = $managerTicket;
     }
 
     /**
@@ -194,31 +242,11 @@ class BaseController
         }
         return self::$plugin_path ;
     }
-    public function raiseError($mMsg, $aOther = []) {
 
-        $iCode = 409; // HTTP 409 Conflict
-
-        if ($mMsg instanceof WP_Error) {
-            $iCode = ($mMsg->get_error_code());
-            $mMsg = $mMsg->get_error_message();
-        }
-
-        status_header($iCode);
-        return new WP_Error($iCode, $mMsg, $aOther);
-    }
     public function activated( string $key )
     {
         $option = get_option( self::getPluginName() );
         return isset( $option[ $key ] ) ? $option[ $key ] : false;
     }
-    public static function Log($text,$place=null){
-        if(self::$debug){
-            $arr = debug_backtrace(false,2);
-            if(is_array($text)){
-                $text = print_r($text,1);
-            }
-            Logger()->info('[ MinterStore '.$arr[1]['function'].'] '.$text);
-        }
-        return;
-    }
+
 }

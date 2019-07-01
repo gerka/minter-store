@@ -113,6 +113,9 @@ class SettingsApi
     }
     public function setSettings( array $settings )
     {
+        if(!empty($this->settings)){
+            $settings = array_merge($this->settings,$settings);
+        }
         $this->settings = $settings;
         return $this;
     }
@@ -123,6 +126,9 @@ class SettingsApi
     }
     public function setFields( array $fields )
     {
+        if(!empty($this->fields)){
+            $fields = array_merge($this->fields,$fields);
+        }
         $this->fields = $fields;
         return $this;
     }

@@ -16,8 +16,10 @@ class MinterStoreExceptions extends \Exception
         $message = self::MSG_PREFIX . $message;
         parent::__construct($message, $code, $previous);
     }
-    public static function Log($text,$place=null){
-
+    public static function Log($text=null,$place=null){
+            if(is_array($text)){
+                $text = print_r($text,1);
+            }
             $arr = debug_backtrace(false,2);
             error_log('[ MinterStore '.$arr[1]['function'].'] '.$text);
 
